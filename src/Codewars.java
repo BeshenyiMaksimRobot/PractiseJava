@@ -1,6 +1,65 @@
 import java.util.*;
 
 public class Codewars {
+	/*
+		Make a spiral
+		3 kyu
+
+		Your task, is to create a NxN spiral with a given size.
+		
+		For example, spiral with size 5 should look like this:
+		
+		00000
+		....0
+		000.0
+		0...0
+		00000
+		and with the size 10:
+		
+		0000000000
+		.........0
+		00000000.0
+		0......0.0
+		0.0000.0.0
+		0.0..0.0.0
+		0.0....0.0
+		0.000000.0
+		0........0
+		0000000000
+		Return value should contain array of arrays, of 0 and 1, with the first row being composed of 1s. For example for given size 5 result should be:
+		
+		[[1,1,1,1,1],[0,0,0,0,1],[1,1,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]
+		Because of the edge-cases for tiny spirals, the size will be at least 5.
+		
+		General rule-of-a-thumb is, that the snake made with '1' cannot touch to itself.
+	 */
+	public static int[][] spiralize(int size) {
+		int[][] spiral = new int[size][size];
+		for (int[] row: spiral) Arrays.fill(row, 0);
+		
+		for (int i = 0; i <= size/2 + 1; i += 2) {
+			for (int j = i>2?i-2:0; j < size - i - 1; j++) {
+				spiral[i][j] = 1;
+			}
+			for (int j = i; j < size - i; j++){
+				spiral[j][size - i - 1] = 1;
+			}
+		}
+		
+		for (int i = size - 1; i >= size/2 + 1; i -= 2){
+			for (int j = size - i; j < i; j++){
+				spiral[i][j] = 1;
+			}
+			for (int j = i; j > size - i + 1; j--){
+				spiral[j][size - i - 1] = 1;
+			}
+		}
+		if ((size - 7) % 4 == 0)
+			spiral[size/2 + 1][size/2 - 1] = 1;
+		
+		return spiral;
+	}
+	
     /*
         Human Readable Time
         5 kyu
@@ -16,7 +75,6 @@ public class Codewars {
      */
     public static String makeReadable(int seconds) {
 		return String.format("%2d:%2d:%2d", seconds/3600,(seconds%3600)/60,seconds%60).replaceAll(" ", "0");
-	    //return seconds/3600 + ":" + (seconds%3600)/60 + ":" + seconds%60;
     }
 	
 	/*
