@@ -7,8 +7,7 @@ public class Main {
         System.out.println(Codewars.powerSumDigTerm(30));
         Codewars.startTimer.interrupt();
         System.out.println(Codewars.miliseconds + " ms");
-        
          */
-        openaiComIdeas.p6();
+        openaiComIdeas.p7();
     }
 }

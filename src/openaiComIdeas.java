@@ -133,7 +133,36 @@ public class openaiComIdeas {
 	/*
         A program that simulates a simple game, such as rock-paper-scissors or tic-tac-toe.
 	*/
-	
+	public static void p7(){
+		while (true)
+			try {
+				Random random = new Random();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("Enter 1 for scissors, 2 for rock, 3 for paper:");
+				int player = Integer.parseInt(reader.readLine());
+				int bot = random.nextInt(3) + 1;
+				switch (player){
+					case 1 -> {
+						if (bot == 1) System.out.println("Draw, try again");
+						if (bot == 2) System.out.println("You lose, try again...");
+						if (bot == 3) System.out.println("You won! Another round?");
+					}
+					case 2 -> {
+						if (bot == 1) System.out.println("You won! Another round?");
+						if (bot == 2) System.out.println("Draw, try again");
+						if (bot == 3) System.out.println("You lose, try again...");
+					}
+					case 3 -> {
+						if (bot == 1) System.out.println("You lose, try again...");
+						if (bot == 2) System.out.println("You won! Another round?");
+						if (bot == 3) System.out.println("Draw, try again");
+					}
+					default -> System.out.println("Invalid option");
+				}
+			} catch (IOException | NumberFormatException e) {
+				System.out.println("Invalid value");
+			}
+	}
 }
 class ToDoTask {
 	private final LocalDateTime createdAt = LocalDateTime.now();
