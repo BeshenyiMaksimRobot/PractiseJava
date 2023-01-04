@@ -2,6 +2,10 @@ import java.util.*;
 
 public class Codewars {
 	/*
+
+	 */
+
+	/*
 		Numbers that are a power of their sum of digits
 		5 kyu
 		3 ms
