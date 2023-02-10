@@ -3,8 +3,106 @@ import java.util.*;
 public class Codewars {
 	/*
 
+		Create your own mechanical dartboard that gives back your score based on the coordinates of your dart.
+
+		Task:
+
+		Use the scoring rules for a standard dartboard:
+		https://upload.wikimedia.org/wikipedia/commons/4/42/Dartboard.svg
+		Finish method:
+		public String getScore(double x, double y);
+		The coordinates are `(x, y)` are always relative to the center of the board (0, 0). The unit is millimeters. If you throw your dart 5 centimeters to the left and 3 centimeters below, it is written as:
+		String score = dartboard.getScore(-50, -30);
+		Possible scores are:
+			Outside of the board: `"X"`
+			Bull's eye: `"DB"`
+			Bull: `"SB"`
+			A single number, example: `"10"`
+			A triple number: `"T10"`
+			A double number: `"D10"`
+		A throw that ends exactly on the border of two sections results in a bounce out. You can ignore this because all the given coordinates of the tests are within the sections.
+		The diameters of the circles on the dartboard are:
+			Bull's eye: `12.70 mm`
+			Bull: `31.8 mm`
+			Triple ring inner circle: `198 mm`
+			Triple ring outer circle: `214 mm`
+			Double ring inner circle: `324 mm`
+			Double ring outer circle: `340 mm`
+		If you liked this kata, you can continue with: Let's Play Darts: Beat The Power!
 	 */
 
+	public static String getScore(double x, double y){
+		double hypotenuse = Math.sqrt(x*x + y*y);
+		if (hypotenuse <= 6.35)
+			return "DB";
+		if (hypotenuse <= 15.9)
+			return "SB";
+		if (hypotenuse > 170)
+			return "X";
+		String res = "";
+		double step = Math.PI / 10;
+		double[][] values = new double[][]{
+				{Math.PI / 20, 6				},
+				{Math.PI / 20 + step, 13		},
+				{Math.PI / 20 + step * 2, 4		},
+				{Math.PI / 20 + step * 3, 18	},
+				{Math.PI / 20 + step * 4, 1		},
+
+				{Math.PI / 20 + step * 5, 20	},
+				{Math.PI / 20 + step * 6, 5		},
+				{Math.PI / 20 + step * 7, 12	},
+				{Math.PI / 20 + step * 8, 9		},
+				{Math.PI / 20 + step * 9, 14	},
+
+				{Math.PI / 20 + step * 10, 11	},
+				{Math.PI / 20 + step * 11, 8	},
+				{Math.PI / 20 + step * 12, 16	},
+				{Math.PI / 20 + step * 13, 7	},
+				{Math.PI / 20 + step * 14, 19	},
+
+				{Math.PI / 20 + step * 15, 3	},
+				{Math.PI / 20 + step * 16, 17	},
+				{Math.PI / 20 + step * 17, 2	},
+				{Math.PI / 20 + step * 18, 15	},
+				{Math.PI / 20 + step * 19, 10	},
+		};
+		if (hypotenuse >= 99 && hypotenuse <= 107) res += "T";
+		if (hypotenuse >= 162 && hypotenuse <= 170) res += "D";
+		if (x == 0 || y == 0){
+			if (x > 0) return res + 6;
+			if (y > 0) return res + 20;
+			if (x < 0) return res + 11;
+			if (y < 0) return res + 3;
+		}
+		int quarter = 0;
+		if (x < 0 && y > 0){
+			quarter = 1;
+			double temp = x;
+			x = y;
+			y = temp;
+		} else if (x < 0 && y < 0){
+			quarter = 2;
+		} else if (x > 0 && y < 0){
+			quarter = 3;
+			double temp = x;
+			x = y;
+			y = temp;
+		}
+		double angle = 2 * Math.atan(Math.abs(y) / (Math.abs(x) + hypotenuse));
+		System.out.println(angle);
+		angle = angle + quarter * (Math.PI / 2);
+		System.out.println(angle);
+		int i = 0;
+		while (angle >= values[i][0]){
+			i++;
+			if (i == 20) {
+				i = 0;
+				break;
+			}
+		}
+		res += (int)values[i][1];
+		return res;
+	}
 	/*
 		Numbers that are a power of their sum of digits
 		5 kyu
